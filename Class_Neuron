@@ -1,0 +1,59 @@
+# Импортирую модуль math для ф-ции активации
+import math
+
+# Объявил класс Neuron
+class Neuron:
+    # Применил метод init для весов, обозначил атрибут self.weights и присвоил переменную w
+    def __init__(self, w):
+        self.weights = w
+
+    # Объявил метод входных данных, обозначив атрибут self.inputs и присвоил переменную x
+    def set_inputs(self, x):
+        self.inputs = x
+
+    # Объявил метод входных данных
+    def increased_amount(self):
+        return sum(w * x for w, x in zip(self.weights, self.inputs))
+
+    # Объявил метод для вычисления взвешенных сумм
+    def element_multiplication(self):
+        Summ = [] # пустой список
+        for i in range(len(self.weights)): # проходимся по длине списка весов по индексу
+            # Сохраняем в переменной результат умножения индексов списков
+            product = self.weights[i] * self.inputs[i]
+            # Добавляем каждый результат умножения индексов в конец список
+            Summ.append(product)
+        # Возвращаем результат
+        return Summ
+
+    # Реализую ф-цию активации Сигмоидная
+    def activation_function(self, x):
+        return 1 / (1 + math.exp(-x))
+
+    # Метод для получения результата с активацией
+    def get_output(self):
+        weighted_sum = self.increased_amount()
+        return self.activation_function(weighted_sum)
+
+# Списки на вход
+weights = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
+inputs =  [0.1, 0.2, 0.3, 0.4, 0,1, 0.7, 1,2, 0.1, 0.2, 0]
+
+# Создаём новый объект neuron класса Neuron
+neuron = Neuron(weights)
+neuron.set_inputs(inputs)
+
+# Вызов ф-ции element через переменную neuron
+element = neuron.element_multiplication()
+# Форматируем каждый элемент списка Summ с двумя знаками после запятой
+formatted_element = [f"{e:.2f}" for e in element]
+print(f"Результат поэлементного умножения: {formatted_element}")
+
+# Вызываем метод вычисления взвешенных сумм
+result = neuron.increased_amount()
+print(f"Взвешенная сумма: {result:.2f}")
+
+# Получаем результат после применения функции активации
+output = neuron.get_output()
+print(f"Результат после активации: {output:.2f}")
+
